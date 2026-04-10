@@ -10,7 +10,8 @@ const swaggerDocument = {
     {
       //url: 'http://localhost:3000',
       url: 'https://cse341-node-final-project-sz16.onrender.com',
-      description: 'Local server'
+      //description: 'Local server'
+      description: 'Running on Render'
     }
   ],
   tags: [
