@@ -1,25 +1,17 @@
 const express = require('express');
+const {
+  getCartByUserId,
+  addItemToCart,
+  updateCartItemQuantity,
+  removeItemFromCart
+} = require('../controllers/cartController');
+const { validateAddToCart, validateUpdateCartQuantity } = require('../middleware/validateCart');
 
 const router = express.Router();
 
-router.get('/:userId', (req, res) => {
-  res.status(200).json({ message: `Get cart route working for user: ${req.params.userId}` });
-});
-
-router.post('/', (req, res) => {
-  res.status(201).json({ message: 'Add item to cart route working' });
-});
-
-router.put('/:userId/items/:productId', (req, res) => {
-  res.status(200).json({
-    message: `Update cart item route working for user ${req.params.userId} and product ${req.params.productId}`
-  });
-});
-
-router.delete('/:userId/items/:productId', (req, res) => {
-  res.status(200).json({
-    message: `Delete cart item route working for user ${req.params.userId} and product ${req.params.productId}`
-  });
-});
+router.get('/:userId', getCartByUserId);
+router.post('/', validateAddToCart, addItemToCart);
+router.put('/:userId/items/:productId', validateUpdateCartQuantity, updateCartItemQuantity);
+router.delete('/:userId/items/:productId', removeItemFromCart);
 
 module.exports = router;
