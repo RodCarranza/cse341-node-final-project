@@ -1,10 +1,11 @@
 const { MongoClient } = require('mongodb');
 
 let db;
+let client;
 
 async function connectDB() {
   try {
-    const client = new MongoClient(process.env.MONGODB_URI);
+    client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
 
     db = client.db(process.env.DB_NAME);
@@ -17,10 +18,15 @@ async function connectDB() {
 
 function getDB() {
   if (!db) {
-    throw new Error('Database not initialized. Call connectDB first.');
+    throw new Error('Database not initialized.');
   }
-
   return db;
 }
 
-module.exports = { connectDB, getDB };
+async function closeDB() {
+  if (client) {
+    await client.close();
+  }
+}
+
+module.exports = { connectDB, getDB, closeDB };

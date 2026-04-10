@@ -8,8 +8,8 @@ const swaggerDocument = {
   },
   servers: [
     {
-      //url: 'http://localhost:3000',
-      url: 'https://cse341-node-final-project-sz16.onrender.com',
+      url: 'http://localhost:3000',
+      //url: 'https://cse341-node-final-project-sz16.onrender.com',
       //description: 'Local server'
       description: 'Running on Render'
     }
@@ -37,7 +37,7 @@ const swaggerDocument = {
       Product: {
         type: 'object',
         properties: {
-          _id: { type: 'string', example: '66c123abc123abc123abc999' },
+          //_id: { type: 'string', example: '66c123abc123abc123abc999' },
           name: { type: 'string', example: 'Wireless Mouse' },
           description: { type: 'string', example: 'Ergonomic wireless mouse' },
           price: { type: 'number', example: 29.99 },
@@ -47,9 +47,9 @@ const swaggerDocument = {
           imageUrl: {
             type: 'string',
             example: 'https://example.com/images/mouse.jpg'
-          },
-          createdAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' },
-          updatedAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' }
+          }
+          //createdAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' },
+          //updatedAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' }
         }
       },
       Cart: {
