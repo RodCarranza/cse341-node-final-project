@@ -1,25 +1,19 @@
 const express = require('express');
+const validateOrder = require('../middleware/validateOrder');
+const {
+  getAllOrders,
+  getOrderById,
+  createOrder,
+  updateOrder,
+  deleteOrder
+} = require('../controllers/ordersController');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.status(200).json({ message: 'Get all orders route working' });
-});
-
-router.get('/:id', (req, res) => {
-  res.status(200).json({ message: `Get order by ID route working: ${req.params.id}` });
-});
-
-router.post('/', (req, res) => {
-  res.status(201).json({ message: 'Create order route working' });
-});
-
-router.put('/:id', (req, res) => {
-  res.status(200).json({ message: `Update order route working: ${req.params.id}` });
-});
-
-router.delete('/:id', (req, res) => {
-  res.status(200).json({ message: `Delete order route working: ${req.params.id}` });
-});
+router.get('/', getAllOrders);
+router.get('/:id', getOrderById);
+router.post('/', validateOrder, createOrder);
+router.put('/:id', validateOrder, updateOrder);
+router.delete('/:id', deleteOrder);
 
 module.exports = router;

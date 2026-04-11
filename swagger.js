@@ -77,7 +77,7 @@ const swaggerDocument = {
       Order: {
         type: 'object',
         properties: {
-          _id: { type: 'string', example: '66c123abc123abc123abc555' },
+          //_id: { type: 'string', example: '66c123abc123abc123abc555' },
           userId: { type: 'string', example: '66c123abc123abc123abc123' },
           items: {
             type: 'array',
@@ -95,8 +95,8 @@ const swaggerDocument = {
           totalAmount: { type: 'number', example: 59.98 },
           status: { type: 'string', example: 'pending' },
           shippingAddress: { type: 'string', example: 'San Salvador, El Salvador' },
-          paymentMethod: { type: 'string', example: 'credit card' },
-          createdAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' }
+          paymentMethod: { type: 'string', example: 'credit card' }
+          //createdAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' }
         }
       }
     }
