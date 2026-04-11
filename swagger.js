@@ -17,7 +17,7 @@ const swaggerDocument = {
     }
   ],
   tags: [
-    { name: 'Auth', description: 'Authentication routes' },
+    //{ name: 'Auth', description: 'Authentication routes' },
     { name: 'Users', description: 'User routes' },
     { name: 'Products', description: 'Product routes' },
     { name: 'Cart', description: 'Cart routes' },
@@ -90,7 +90,7 @@ const swaggerDocument = {
     }
   },
   paths: {
-    '/auth/google': {
+    /*'/auth/google': {
       get: {
         tags: ['Auth'],
         summary: 'Start Google OAuth login',
@@ -109,7 +109,7 @@ const swaggerDocument = {
           401: { description: 'Unauthorized' }
         }
       }
-    },
+    },*/
 
     '/users/profile': {
       get: {
@@ -118,6 +118,19 @@ const swaggerDocument = {
         responses: {
           200: { description: 'OK' },
           401: { description: 'Unauthorized' }
+        }
+      }
+    },
+
+    '/users/me': {
+      delete: {
+        tags: ['Users'],
+        summary: 'Delete current user account',
+        responses: {
+          200: { description: 'OK' },
+          401: { description: 'Unauthorized' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
         }
       }
     },

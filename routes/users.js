@@ -1,5 +1,6 @@
 const express = require('express');
 const { ensureAuth } = require('../middleware/auth');
+const { deleteCurrentUser } = require('../controllers/usersController');
 
 const router = express.Router();
 
@@ -15,5 +16,7 @@ router.get('/profile', ensureAuth, (req, res) => {
     }
   });
 });
+
+router.delete('/me', ensureAuth, deleteCurrentUser);
 
 module.exports = router;
