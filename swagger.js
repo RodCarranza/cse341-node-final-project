@@ -1,3 +1,5 @@
+const isProduction = process.env.RENDER || process.env.NODE_ENV === 'production';
+
 const swaggerDocument = {
   openapi: '3.0.0',
   info: {
@@ -6,18 +8,21 @@ const swaggerDocument = {
     description:
       'API documentation for the E-Commerce Store. This API manages users, products, cart items, and orders.'
   },
-  servers: [
-    {
-      url: 'http://localhost:3000',
-      description: 'Local server'
-    },
-    {
-      url: 'https://cse341-node-final-project-sz16.onrender.com',
-      description: 'Render server'
-    }
-  ],
+  servers: isProduction
+    ? [
+        {
+          url: 'https://cse341-node-final-project-sz16.onrender.com',
+          description: 'Render server'
+        }
+      ]
+    : [
+        {
+          url: 'http://localhost:3000',
+          description: 'Local server'
+        }
+      ],
   tags: [
-    //{ name: 'Auth', description: 'Authentication routes' },
+    // { name: 'Auth', description: 'Authentication routes' },
     { name: 'Users', description: 'User routes' },
     { name: 'Products', description: 'Product routes' },
     { name: 'Cart', description: 'Cart routes' },
@@ -90,7 +95,7 @@ const swaggerDocument = {
     }
   },
   paths: {
-    /*'/auth/google': {
+    /* '/auth/google': {
       get: {
         tags: ['Auth'],
         summary: 'Start Google OAuth login',
@@ -109,7 +114,7 @@ const swaggerDocument = {
           401: { description: 'Unauthorized' }
         }
       }
-    },*/
+    }, */
 
     '/users/profile': {
       get: {
