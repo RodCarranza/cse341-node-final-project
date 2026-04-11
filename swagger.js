@@ -1,3 +1,5 @@
+const { example } = require('./validation/productValidation');
+
 const isProduction = process.env.RENDER || process.env.NODE_ENV === 'production';
 
 const swaggerDocument = {
@@ -44,13 +46,13 @@ const swaggerDocument = {
       Product: {
         type: 'object',
         properties: {
-          name: { type: 'string' },
-          description: { type: 'string' },
-          price: { type: 'number' },
-          category: { type: 'string' },
-          stock: { type: 'integer' },
-          brand: { type: 'string' },
-          imageUrl: { type: 'string' }
+          name: { type: 'string', example: 'Keyboard' },
+          description: { type: 'string', example: 'Ergonomic Keyboard' },
+          price: { type: 'number', example: 19.99 },
+          category: { type: 'string', example: 'Eletronics' },
+          stock: { type: 'integer', example: 100 },
+          brand: { type: 'string', example: 'Dell' },
+          imageUrl: { type: 'string', example: 'https://example.com/keyboard.jpg' }
         }
       },
       Cart: {
@@ -82,40 +84,19 @@ const swaggerDocument = {
               type: 'object',
               properties: {
                 productId: { type: 'string' },
-                quantity: { type: 'integer' }
+                quantity: { type: 'integer', example: 2 }
               }
             }
           },
-          totalAmount: { type: 'number' },
-          status: { type: 'string' },
-          shippingAddress: { type: 'string' },
-          paymentMethod: { type: 'string' }
+          totalAmount: { type: 'number', example: 39.98 },
+          status: { type: 'string', example: 'shipped' },
+          shippingAddress: { type: 'string', example: 'TX, USA' },
+          paymentMethod: { type: 'string', example: 'credit card' }
         }
       }
     }
   },
   paths: {
-    /* '/auth/google': {
-      get: {
-        tags: ['Auth'],
-        summary: 'Start Google OAuth login',
-        responses: {
-          302: { description: 'Redirect' }
-        }
-      }
-    },
-
-    '/auth/google/callback': {
-      get: {
-        tags: ['Auth'],
-        summary: 'Google OAuth callback',
-        responses: {
-          200: { description: 'OK' },
-          401: { description: 'Unauthorized' }
-        }
-      }
-    }, */
-
     '/users/profile': {
       get: {
         tags: ['Users'],
