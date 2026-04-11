@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>E-Commerce Store</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+    }
+
+    .container {
+      width: 360px;
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .message {
+      display: none;
+      margin-bottom: 18px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .message.success {
+      display: block;
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+
+    .message.error {
+     display: block;
+    background-color: #ffebee;   /* light red/pink background */
+    color: #c62828;              /* strong red text */
+    border: 1px solid #ffcdd2;   /* soft red border */
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
+
+    .login-btn {
+      background-color: #4285f4;
+      color: white;
+    }
+
+    .login-btn:hover {
+      background-color: #2f74e0;
+    }
+
+    .docs-btn {
+      background-color: #f3f3f3;
+      color: #333;
+    }
+
+    .docs-btn:hover {
+      background-color: #e3e3e3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>E-Commerce Store</h1>
+    <p>Login to continue</p>
+
+    <div id="statusMessage" class="message"></div>
+
+    <button class="login-btn" onclick="loginWithGoogle()">Login with Google</button>
+    <button class="docs-btn" onclick="goToDocs()">Go to API Docs</button>
+    <button class="docs-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    function loginWithGoogle() {
+      window.location.href = '/auth/google';
+    }
+
+    function goToDocs() {
+    window.open('/api-docs', '_blank');
+    }
+
+    function logout() {
+        window.location.href = '/auth/logout';
+    }
+
+function showStatusMessage() {
+  const params = new URLSearchParams(window.location.search);
+  const statusMessage = document.getElementById('statusMessage');
+
+  if (params.get('login') === 'success') {
+    statusMessage.className = 'message success';
+    statusMessage.textContent = 'Login successful';
+  } else if (params.get('login') === 'failed') {
+    statusMessage.className = 'message error';
+    statusMessage.textContent = 'Login failed';
+  } else if (params.get('logout') === 'success') {
+    statusMessage.className = 'message error';
+    statusMessage.textContent = 'Logout successfully';
+  }
+
+  if (params.get('login') || params.get('logout')) {
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, document.title, cleanUrl);
+  }
+}
+
+showStatusMessage();
+  </script>
+</body>
+</html>

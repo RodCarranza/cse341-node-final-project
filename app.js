@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const path = require('path');
 const session = require('express-session');
 const swaggerUi = require('swagger-ui-express');
 
@@ -28,13 +29,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => {
-  res.status(200).json({
-    message: 'E-Commerce API is running'
-  });
-});
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/products', productRoutes);
 app.use('/cart', cartRoutes);
