@@ -1,8 +1,10 @@
 require('dotenv').config();
 
 const express = require('express');
+const session = require('express-session');
 const swaggerUi = require('swagger-ui-express');
 
+const passport = require('./config/passport');
 const swaggerDocument = require('./swagger');
 
 const productRoutes = require('./routes/products');
@@ -14,6 +16,17 @@ const authRoutes = require('./routes/auth');
 const app = express();
 
 app.use(express.json());
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

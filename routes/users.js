@@ -1,9 +1,19 @@
 const express = require('express');
+const { ensureAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/profile', (req, res) => {
-  res.status(200).json({ message: 'User profile route working' });
+router.get('/profile', ensureAuth, (req, res) => {
+  res.status(200).json({
+    message: 'User profile retrieved successfully',
+    user: {
+      id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+      role: req.user.role,
+      googleId: req.user.googleId
+    }
+  });
 });
 
 module.exports = router;
