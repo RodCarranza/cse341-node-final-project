@@ -1,5 +1,6 @@
 const express = require('express');
 const validateProduct = require('../middleware/validateProduct');
+const { ensureAuth } = require('../middleware/auth');
 const {
   getAllProducts,
   getProductById,
@@ -12,8 +13,8 @@ const router = express.Router();
 
 router.get('/', getAllProducts);
 router.get('/:id', getProductById);
-router.post('/', validateProduct, createProduct);
-router.put('/:id', validateProduct, updateProduct);
-router.delete('/:id', deleteProduct);
+router.post('/', ensureAuth, validateProduct, createProduct);
+router.put('/:id', ensureAuth, validateProduct, updateProduct);
+router.delete('/:id', ensureAuth, deleteProduct);
 
 module.exports = router;

@@ -3,7 +3,7 @@ const ensureAuth = (req, res, next) => {
     return next();
   }
 
-  return res.status(401).json({ message: 'Unauthorized' });
+  return res.status(401).json({ message: 'Unauthorized. Please log in first.' });
 };
 
 module.exports = { ensureAuth };

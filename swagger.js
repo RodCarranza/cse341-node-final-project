@@ -9,9 +9,11 @@ const swaggerDocument = {
   servers: [
     {
       url: 'http://localhost:3000',
-      //url: 'https://cse341-node-final-project-sz16.onrender.com',
-      //description: 'Local server'
-      description: 'Running on Render'
+      description: 'Local server'
+    },
+    {
+      url: 'https://cse341-node-final-project-sz16.onrender.com',
+      description: 'Render server'
     }
   ],
   tags: [
@@ -26,102 +28,74 @@ const swaggerDocument = {
       User: {
         type: 'object',
         properties: {
-          _id: { type: 'string', example: '66c123abc123abc123abc123' },
-          name: { type: 'string', example: 'Rodrigo Alexis' },
-          email: { type: 'string', example: 'rodrigo@email.com' },
-          googleId: { type: 'string', example: '10987654321' },
-          role: { type: 'string', example: 'customer' },
-          createdAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' }
+          _id: { type: 'string' },
+          name: { type: 'string' },
+          email: { type: 'string' },
+          googleId: { type: 'string' },
+          role: { type: 'string' },
+          createdAt: { type: 'string' }
         }
       },
       Product: {
         type: 'object',
         properties: {
-          //_id: { type: 'string', example: '66c123abc123abc123abc999' },
-          name: { type: 'string', example: 'Wireless Mouse' },
-          description: { type: 'string', example: 'Ergonomic wireless mouse' },
-          price: { type: 'number', example: 29.99 },
-          category: { type: 'string', example: 'Electronics' },
-          stock: { type: 'integer', example: 100 },
-          brand: { type: 'string', example: 'LogiTech' },
-          imageUrl: {
-            type: 'string',
-            example: 'https://example.com/images/mouse.jpg'
-          }
-          //createdAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' },
-          //updatedAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' }
+          name: { type: 'string' },
+          description: { type: 'string' },
+          price: { type: 'number' },
+          category: { type: 'string' },
+          stock: { type: 'integer' },
+          brand: { type: 'string' },
+          imageUrl: { type: 'string' }
         }
       },
       Cart: {
         type: 'object',
         properties: {
-          _id: { type: 'string', example: '66c123abc123abc123abc777' },
-          userId: { type: 'string', example: '66c123abc123abc123abc123' },
+          _id: { type: 'string' },
+          userId: { type: 'string' },
           items: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
-                productId: {
-                  type: 'string',
-                  example: '66c123abc123abc123abc999'
-                },
-                quantity: { type: 'integer', example: 2 }
+                productId: { type: 'string' },
+                quantity: { type: 'integer' }
               }
             }
           },
-          totalPrice: { type: 'number', example: 59.98 },
-          updatedAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' }
+          totalPrice: { type: 'number' },
+          updatedAt: { type: 'string' }
         }
       },
       Order: {
         type: 'object',
         properties: {
-          //_id: { type: 'string', example: '66c123abc123abc123abc555' },
-          userId: { type: 'string', example: '66c123abc123abc123abc123' },
+          userId: { type: 'string' },
           items: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
-                productId: {
-                  type: 'string',
-                  example: '66c123abc123abc123abc999'
-                },
-                quantity: { type: 'integer', example: 2 }
+                productId: { type: 'string' },
+                quantity: { type: 'integer' }
               }
             }
           },
-          totalAmount: { type: 'number', example: 59.98 },
-          status: { type: 'string', example: 'pending' },
-          shippingAddress: { type: 'string', example: 'San Salvador, El Salvador' },
-          paymentMethod: { type: 'string', example: 'credit card' }
-          //createdAt: { type: 'string', example: '2026-04-09T12:00:00.000Z' }
+          totalAmount: { type: 'number' },
+          status: { type: 'string' },
+          shippingAddress: { type: 'string' },
+          paymentMethod: { type: 'string' }
         }
       }
     }
   },
   paths: {
-    '/': {
-      get: {
-        summary: 'Root route',
-        description: 'API home route',
-        responses: {
-          200: {
-            description: 'API running successfully'
-          }
-        }
-      }
-    },
-
     '/auth/google': {
       get: {
         tags: ['Auth'],
         summary: 'Start Google OAuth login',
         responses: {
-          200: {
-            description: 'Google OAuth route ready'
-          }
+          302: { description: 'Redirect' }
         }
       }
     },
@@ -129,11 +103,10 @@ const swaggerDocument = {
     '/auth/google/callback': {
       get: {
         tags: ['Auth'],
-        summary: 'Google OAuth callback route',
+        summary: 'Google OAuth callback',
         responses: {
-          200: {
-            description: 'OAuth callback route ready'
-          }
+          200: { description: 'OK' },
+          401: { description: 'Unauthorized' }
         }
       }
     },
@@ -141,11 +114,10 @@ const swaggerDocument = {
     '/users/profile': {
       get: {
         tags: ['Users'],
-        summary: 'Get current user profile',
+        summary: 'Get user profile',
         responses: {
-          200: {
-            description: 'User profile returned'
-          }
+          200: { description: 'OK' },
+          401: { description: 'Unauthorized' }
         }
       }
     },
@@ -155,28 +127,26 @@ const swaggerDocument = {
         tags: ['Products'],
         summary: 'Get all products',
         responses: {
-          200: {
-            description: 'List of products'
-          }
+          200: { description: 'OK' },
+          500: { description: 'Server error' }
         }
       },
       post: {
         tags: ['Products'],
-        summary: 'Create a new product',
+        summary: 'Create product',
         requestBody: {
           required: true,
           content: {
             'application/json': {
-              schema: {
-                $ref: '#/components/schemas/Product'
-              }
+              schema: { $ref: '#/components/schemas/Product' }
             }
           }
         },
         responses: {
-          201: {
-            description: 'Product created'
-          }
+          201: { description: 'Created' },
+          400: { description: 'Bad request' },
+          401: { description: 'Unauthorized' },
+          500: { description: 'Server error' }
         }
       }
     },
@@ -185,90 +155,18 @@ const swaggerDocument = {
       get: {
         tags: ['Products'],
         summary: 'Get product by ID',
-        parameters: [
-          {
-            name: 'id',
-            in: 'path',
-            required: true,
-            schema: { type: 'string' }
-          }
-        ],
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
         responses: {
-          200: {
-            description: 'Single product returned'
-          }
+          200: { description: 'OK' },
+          400: { description: 'Bad request' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
         }
       },
       put: {
         tags: ['Products'],
-        summary: 'Update product by ID',
-        parameters: [
-          {
-            name: 'id',
-            in: 'path',
-            required: true,
-            schema: { type: 'string' }
-          }
-        ],
-        requestBody: {
-          required: true,
-          content: {
-            'application/json': {
-              schema: {
-                $ref: '#/components/schemas/Product'
-              }
-            }
-          }
-        },
-        responses: {
-          200: {
-            description: 'Product updated'
-          }
-        }
-      },
-      delete: {
-        tags: ['Products'],
-        summary: 'Delete product by ID',
-        parameters: [
-          {
-            name: 'id',
-            in: 'path',
-            required: true,
-            schema: { type: 'string' }
-          }
-        ],
-        responses: {
-          200: {
-            description: 'Product deleted'
-          }
-        }
-      }
-    },
-
-    '/cart/{userId}': {
-      get: {
-        tags: ['Cart'],
-        summary: 'Get cart by user ID',
-        parameters: [
-          {
-            name: 'userId',
-            in: 'path',
-            required: true,
-            schema: { type: 'string' }
-          }
-        ],
-        responses: {
-          200: {
-            description: 'Cart returned'
-          }
-        }
-      }
-    },
-
-    '/cart': {
-      post: {
-        tags: ['Cart'],
-        summary: 'Add item to cart',
+        summary: 'Update product',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
         requestBody: {
           required: true,
           content: {
@@ -276,18 +174,82 @@ const swaggerDocument = {
               schema: {
                 type: 'object',
                 properties: {
-                  userId: { type: 'string' },
-                  productId: { type: 'string' },
-                  quantity: { type: 'integer' }
+                  name: { type: 'string', example: 'Wireless Mouse' },
+                  description: { type: 'string', example: 'Ergonomic wireless mouse' },
+                  price: { type: 'number', example: 29.99 },
+                  category: { type: 'string', example: 'Electronics' },
+                  stock: { type: 'integer', example: 100 },
+                  brand: { type: 'string', example: 'Logitech' },
+                  imageUrl: {
+                    type: 'string',
+                    example: 'https://example.com/images/mouse.jpg'
+                  }
                 }
               }
             }
           }
         },
         responses: {
-          201: {
-            description: 'Item added to cart'
+          204: { description: 'Updated Products' },
+          400: { description: 'Bad request' },
+          401: { description: 'Unauthorized' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
+        }
+      },
+      delete: {
+        tags: ['Products'],
+        summary: 'Delete product',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: {
+          200: { description: 'OK' },
+          400: { description: 'Bad request' },
+          401: { description: 'Unauthorized' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
+        }
+      }
+    },
+
+    '/cart/{userId}': {
+      get: {
+        tags: ['Cart'],
+        summary: 'Get cart',
+        parameters: [{ name: 'userId', in: 'path', required: true, schema: { type: 'string' } }],
+        responses: {
+          200: { description: 'OK' },
+          401: { description: 'Unauthorized' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
+        }
+      }
+    },
+
+    '/cart': {
+      post: {
+        tags: ['Cart'],
+        summary: 'Add to cart',
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  userId: { type: 'string', example: 'user123' },
+                  productId: { type: 'string', example: '66c123abc123abc123abc999' },
+                  quantity: { type: 'integer', example: 2 }
+                }
+              }
+            }
           }
+        },
+        responses: {
+          201: { description: 'Created' },
+          400: { description: 'Bad request' },
+          401: { description: 'Unauthorized' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
         }
       }
     },
@@ -295,7 +257,7 @@ const swaggerDocument = {
     '/cart/{userId}/items/{productId}': {
       put: {
         tags: ['Cart'],
-        summary: 'Update cart item quantity',
+        summary: 'Update cart item',
         parameters: [
           { name: 'userId', in: 'path', required: true, schema: { type: 'string' } },
           { name: 'productId', in: 'path', required: true, schema: { type: 'string' } }
@@ -314,22 +276,25 @@ const swaggerDocument = {
           }
         },
         responses: {
-          200: {
-            description: 'Cart item updated'
-          }
+          204: { description: 'Updated Cart' },
+          400: { description: 'Bad request' },
+          401: { description: 'Unauthorized' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
         }
       },
       delete: {
         tags: ['Cart'],
-        summary: 'Remove item from cart',
+        summary: 'Remove cart item',
         parameters: [
           { name: 'userId', in: 'path', required: true, schema: { type: 'string' } },
           { name: 'productId', in: 'path', required: true, schema: { type: 'string' } }
         ],
         responses: {
-          200: {
-            description: 'Cart item removed'
-          }
+          200: { description: 'OK' },
+          401: { description: 'Unauthorized' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
         }
       }
     },
@@ -339,28 +304,27 @@ const swaggerDocument = {
         tags: ['Orders'],
         summary: 'Get all orders',
         responses: {
-          200: {
-            description: 'List of orders'
-          }
+          200: { description: 'OK' },
+          401: { description: 'Unauthorized' },
+          500: { description: 'Server error' }
         }
       },
       post: {
         tags: ['Orders'],
-        summary: 'Create a new order',
+        summary: 'Create order',
         requestBody: {
           required: true,
           content: {
             'application/json': {
-              schema: {
-                $ref: '#/components/schemas/Order'
-              }
+              schema: { $ref: '#/components/schemas/Order' }
             }
           }
         },
         responses: {
-          201: {
-            description: 'Order created'
-          }
+          201: { description: 'Created' },
+          400: { description: 'Bad request' },
+          401: { description: 'Unauthorized' },
+          500: { description: 'Server error' }
         }
       }
     },
@@ -369,62 +333,70 @@ const swaggerDocument = {
       get: {
         tags: ['Orders'],
         summary: 'Get order by ID',
-        parameters: [
-          {
-            name: 'id',
-            in: 'path',
-            required: true,
-            schema: { type: 'string' }
-          }
-        ],
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
         responses: {
-          200: {
-            description: 'Single order returned'
-          }
+          200: { description: 'OK' },
+          400: { description: 'Bad request' },
+          401: { description: 'Unauthorized' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
         }
       },
       put: {
         tags: ['Orders'],
-        summary: 'Update order by ID',
-        parameters: [
-          {
-            name: 'id',
-            in: 'path',
-            required: true,
-            schema: { type: 'string' }
-          }
-        ],
+        summary: 'Update order',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
         requestBody: {
           required: true,
           content: {
             'application/json': {
               schema: {
-                $ref: '#/components/schemas/Order'
+                type: 'object',
+                properties: {
+                  userId: { type: 'string', example: 'user123' },
+                  items: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        productId: {
+                          type: 'string',
+                          example: '66c123abc123abc123abc999'
+                        },
+                        quantity: { type: 'integer', example: 2 }
+                      }
+                    }
+                  },
+                  totalAmount: { type: 'number', example: 59.98 },
+                  status: { type: 'string', example: 'processing' },
+                  shippingAddress: {
+                    type: 'string',
+                    example: 'San Salvador, El Salvador'
+                  },
+                  paymentMethod: { type: 'string', example: 'credit card' }
+                }
               }
             }
           }
         },
         responses: {
-          200: {
-            description: 'Order updated'
-          }
+          204: { description: 'Updated Orders' },
+          400: { description: 'Bad request' },
+          401: { description: 'Unauthorized' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
         }
       },
       delete: {
         tags: ['Orders'],
-        summary: 'Delete order by ID',
-        parameters: [
-          {
-            name: 'id',
-            in: 'path',
-            required: true,
-            schema: { type: 'string' }
-          }
-        ],
+        summary: 'Delete order',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'string' } }],
         responses: {
-          200: {
-            description: 'Order deleted'
-          }
+          200: { description: 'OK' },
+          400: { description: 'Bad request' },
+          401: { description: 'Unauthorized' },
+          404: { description: 'Not found' },
+          500: { description: 'Server error' }
         }
       }
     }
