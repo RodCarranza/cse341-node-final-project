@@ -1,5 +1,3 @@
-const { example } = require('./validation/productValidation');
-
 const isProduction = process.env.RENDER || process.env.NODE_ENV === 'production';
 
 const swaggerDocument = {
@@ -49,7 +47,7 @@ const swaggerDocument = {
           name: { type: 'string', example: 'Keyboard' },
           description: { type: 'string', example: 'Ergonomic Keyboard' },
           price: { type: 'number', example: 19.99 },
-          category: { type: 'string', example: 'Eletronics' },
+          category: { type: 'string', example: 'Electronics' },
           stock: { type: 'integer', example: 100 },
           brand: { type: 'string', example: 'Dell' },
           imageUrl: { type: 'string', example: 'https://example.com/keyboard.jpg' }
